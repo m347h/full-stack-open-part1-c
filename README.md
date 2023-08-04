@@ -124,7 +124,7 @@ return (
  ```
 
 
-## Event handling##
+## Event handling ##
 
 
 event handlers are called when a specific event occur a few times . A user's interaction with the different elements of a web page can cause a collection of various kinds of events to be triggered.
@@ -172,6 +172,52 @@ Let's also add a button for resetting the counter:
         zero
       </button>
 ```
+## An event handler is a function
+
+we define the event handler for our buttosn where we declare their onClick attributes:
+```
+<button onClick = {() => setCounter(counter+1)}>
+plus 
+</button>
+```
+
+but, this would not work. 
+```
+<button onClick={setCounter(counter + 1)}> 
+  plus
+</button>
+```
+
+and that would break the application. let's seperate the event handlers into seperate functions anway. 
+
+```
+
+const App = () => {
+const [ counter, setCounter ] = useState(0)
+
+const increaseByOne = () => setCounter(counter+1)
+
+const setToZero = () => setCounter(0)
+
+return (
+<div>
+
+<div>{counter}</div>
+<button onClick = {increaseByOne}>
+plus
+</button>
+
+
+<button onClick = {setToZero}>
+zero
+</button>
+
+</div>
+
+)
+}
+```
+
 
 
 
