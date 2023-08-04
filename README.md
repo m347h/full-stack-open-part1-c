@@ -347,6 +347,17 @@ console.log('setting value to 0', counter)
 }
 
 
+return (
+<div>
+<Display counter = {counter} />
+<Button handleClick = {increaseByOne} text="plus" />
+ <Button handleClick = {decreaseByOne} text="minus" />
+ <Button handleClick = {Zero} text="zero" />
+
+ 
+</div> 
+)
+
 }
 
 
