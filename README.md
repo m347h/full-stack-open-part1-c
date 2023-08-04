@@ -87,10 +87,12 @@ counter += 1
 
  ```
 
-##Stateful component##
+## Stateful component 
+
+This kind of important concept. 
 
 all components have been simple that they have not contained any state that could change during lifecycle of the component
-next, let's add state to our application's App w react's ##state hook##
+next, let's add state to our application's App w react's STATE HOOK 🪝
 
 index.js still the old few lines: 
 
@@ -107,10 +109,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />)copy
 App.js is changed to the following: 
 
  ```
-import {useState} from 'React'
+import {useState} from 'React' 
 
 const App = () => {
-const [counter, setCounter ] = useState(0)
+const [counter, setCounter ] = useState(0) // i think for state hooks 🪝, this line essential... 
 
 setTimeout(
 () => setCounter(counter+1),
@@ -174,7 +176,7 @@ Let's also add a button for resetting the counter:
 ```
 ## An event handler is a function
 
-we define the event handler for our buttosn where we declare their onClick attributes:
+we define the event handler for our button where we declare their onClick attributes:
 ```
 <button onClick = {() => setCounter(counter+1)}>
 plus 
@@ -190,34 +192,161 @@ but, this would not work.
 
 and that would break the application. let's seperate the event handlers into seperate functions anway. 
 
-```
+SO, now as a problem to solve, you could implement 2 buttons, one that adds by 1 adn one that goes to 0 in const App..., while using the setCounter ... 
+
+``` 
 
 const App = () => {
-const [ counter, setCounter ] = useState(0)
+const [ counter, setCounter] = useState(0)
 
-const increaseByOne = () => setCounter(counter+1)
+const increaseBy1 = () => setCounter(counter+1)    // these are functions, thats why "= () => "
 
-const setToZero = () => setCounter(0)
+const zero = () => setCounter(0) // these are functions
 
 return (
 <div>
 
-<div>{counter}</div>
-<button onClick = {increaseByOne}>
-plus
+<button onClick = {increaseBy1}>
+one
 </button>
 
-
-<button onClick = {setToZero}>
+<button onClick = {zero}>
 zero
 </button>
 
 </div>
+)
+}
+ 
+```
 
+
+## Passing state - to child components
+
+
+recommended tow rite small and reusable componenets in React. so, let us refactor our application so that its composed of 3 small componenets. 
+
+1-> displaying counter 
+
+1-> displaying button1
+
+1-> displaying button2
+
+
+
+Let's first implement a Display component that's responsible for displaying the value of the counter.
+```
+const Display = (props) => {
+return (
+<div> {props.counter} </div>
 )
 }
 ```
 
+hwo do u use it in the Apps function? in the return section, you would have: 
 
+```
+return(
+<div>
+<Display counter = {counter} />
+</div>
+)
+```
+
+everything still wokrks, when the buttons r clicked and he App gets re-rendered, all of its children including Display are re-rendered. 
+
+now, let;s make a button component for the buttons of our application. We have to pass the event handler and the title of the button thru the componenet;s props. 
+
+```
+const Button = (props) => {
+return (
+<button onClick = {props.handleClick}>
+{props.text}
+</button>
+)
+}
+```
+
+we have to do that... and now, our App componenet looks like this: 
+
+```
+const App = () => {
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+
+  const decreaseByOne = () => setCounter(counter - 1)
+  const setToZero = () => setCounter(0)
+
+  return (
+    <div>
+      <Display counter={counter}/>
+
+      <Button
+        handleClick={increaseByOne}
+        text='plus'
+      />
+      <Button
+        handleClick={setToZero}
+        text='zero'
+      />     
+      <Button
+        handleClick={decreaseByOne}
+        text='minus'
+      />           
+    </div>
+  )
+}
+```
+
+
+## Changes in state cause rerendering
+
+how does changes in state cause re-rendering. 
+when application starts, the code in App is executed, then this code uses a useState hook to create applicaiton state, setting an initial val of the varaible counter. 
+
+This component contains the Display component - which displays the counter's value, 0 - and three Button components.
+
+ The buttons all have event handlers, which are used to change the state of the counter.
+When one of the buttons is clicked, the event handler is executed.
+
+
+ The event handler changes the state of the App component with the setCounter function. Calling a function that changes the state causes the component to rerender.
+
+ So, if a user clicks the plus button, the button's event handler changes the value of counter to 1, and the App component is rerendered. 
+
+ Display receives the new value of the counter, 1, as props. 
+ 
+ The Button components receive event handlers which can be used to change the state of the counter.
+
+const App = () => {
+const [ counter, setCounter ] = useState(0)
+console.log()
+
+const increaseByOne = () => {
+console.log('decreasing, value before ', counter)
+setCounter (counter + 1); 
+console.log('increasing, value after ', counter)
+
+
+}
+
+
+const decreaseByOne = () => {
+console.log('decreasing, value before ', counter)
+
+setCounter (counter - 1); 
+console.log('decreasing, value after ', counter)
+
+}
+
+
+const Zero = () => {
+setCounter (0); 
+console.log('setting value to 0', counter)
+}
+
+
+}
 
 
