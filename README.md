@@ -361,3 +361,64 @@ return (
 }
 
 
+##refractoring components
+
+The component displaying the value of the counter is as follows:
+
+
+```
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
+
+```
+
+The component only uses the counter field of its props. This means we can simplify the component by using destructuring, like so:
+
+```
+const Display = ({ counter }) => {
+  return (
+    <div>{counter}</div>
+  )
+}
+
+```
+
+The function defining the component contains only the return statement, so we can define the function using the more compact form of arrow functions:
+
+```
+const Display = ({ counter }) => <div>{counter}</div>
+```
+
+We can simplify the Button component as well.
+
+
+```
+const Button = (props) => {
+return (
+<button onClick = {props.handleClick} >
+{props.text}
+</button> 
+
+)
+}
+)
+}
+```
+
+We can use destructuring to get only the required fields from props, and use the more compact form of arrow functions:
+
+```
+const Button = ({ handleClick, text }) => (
+<button onClick = {handleClick}>
+{text}
+</button>
+)
+```
+
+dont oversimplify. 
+
