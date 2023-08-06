@@ -1,7 +1,7 @@
  
 # full-stack-open-part1-c
 
-# Component state, event handlers
+# Component state, event handlers 
 
 new example, compoenent helper function, add another method so that we can guess the year of birth of the person being greeted. 
  ```
